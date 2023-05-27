@@ -1,58 +1,58 @@
-# TrollStore
+# 巨魔商店
 
-TrollStore is a permasigned jailed app that can permanently install any IPA you open in it.
+TrollStore 是一个永久签名的监禁应用程序，可以永久安装您在其中打开的任何 IPA。
 
-It works because of an AMFI/CoreTrust bug where iOS does not verify whether or not a root certificate used to sign a binary is legit.
+它之所以有效，是因为AMFI/CoreTrust错误，iOS不会验证用于签署二进制文件的根证书是否合法。
 
-## Installing TrollStore
+## 安装巨魔商店
 
-### Installation Guides
+### 安装指南
 
-| Version / Device | arm64 (A8 - A11) | arm64e (A12 - A15, M1) |
+| 版本/设备 |臂64 （A8 - A11） |arm64e （A12 - A15， M1） |
 | --- | --- | --- |
-| 13.7 and below | Not Supported (CT Bug only got introduced in 14.0) | Not Supported (CT Bug only got introduced in 14.0) |
+| 13.7 及以下 | 不支持（CT 错误仅在 14.0 中引入） | 不支持（CT 错误仅在 14.0 中引入） |
 | 14.0 - 14.8.1 | [checkra1n + TrollHelper](./install_trollhelper.md) | [TrollHelperOTA (arm64e)](./install_trollhelperota_arm64e.md) |
 | 15.0 - 15.4.1 | [TrollHelperOTA (iOS 15+)](./install_trollhelperota_ios15.md) | [TrollHelperOTA (iOS 15+)](./install_trollhelperota_ios15.md) |
 | 15.5 beta 1 - 4 | [TrollHelperOTA (iOS 15+)](./install_trollhelperota_ios15.md) | [TrollHelperOTA (iOS 15+)](./install_trollhelperota_ios15.md) |
-| 15.5 (RC) | Not Supported (CT Bug fixed) | Not Supported (CT Bug fixed) |
+| 15.5 (RC) | 不支持（CT 错误已修复） | 不支持（CT 错误已修复） |
 | 15.6 beta 1 - 5 | [SSH Ramdisk](./install_sshrd.md) | [TrollHelperOTA (arm64e)](./install_trollhelperota_arm64e.md) |
-| 15.6 (RC1/2) and above | Not Supported (CT Bug fixed) | Not Supported (CT Bug fixed) |
+| 15.6 (RC1/2) 及以上 | 不支持（CT 错误已修复） | Not Supported (CT Bug fixed) |
 
-This version table is final, TrollStore will never support anything other than the versions listed here. Do not bother asking, if you got a device on an unsupported version, it's best if you forget TrollStore even exists.
+此版本表是最终版本，TrollStore将永远不支持此处列出的版本以外的任何其他版本。不要问，如果你的设备版本不受支持，最好忘记TrollStore的存在。
 
-## Updating TrollStore
+## 正在更新TrollStore
 
-When a new TrollStore update is available, a button to install it will appear at the top in the TrollStore settings. After tapping the button, TrollStore will automatically download the update, install it, and respring.
+当新的TrollStore更新可用时，TrollStore设置的顶部将显示一个安装按钮。点击按钮后，TrollStore将自动下载更新、安装并重新发布。
 
-Alternatively (if anything goes wrong), you can download the TrollStore.tar file under Releases and open it in TrollStore, TrollStore will install the update and respring.
+或者（如果出现任何问题），您可以在Release下下载TrollStore.tar文件，并在TrollStore中打开它，TrollStore将安装更新并重新发布。
 
-## Uninstalling an app
+## 卸载应用
 
-Apps installed from TrollStore can only be uninstalled from TrollStore itself, tap an app or swipe it to the right in the 'Apps' tab to delete it.
+从TrollStore安装的应用程序只能从TrollStore本身卸载，点击应用程序或在“应用程序”选项卡中将其向右滑动以将其删除。
 
-## Persistence Helper
+## 持久性帮助程序 Persistence Helper
 
-The CoreTrust bug used in TrollStore is only enough to install "System" apps, this is because FrontBoard has an additional security check (it calls libmis) every time before a user app is launched. Unfortunately it is not possible to install new "System" apps that stay through an icon cache reload. Therefore, when iOS reloads the icon cache, all TrollStore installed apps including TrollStore itself will revert back to "User" state and will no longer launch.
+TrollStore中使用的CoreTrust漏洞只足以安装“系统”应用程序，这是因为FrontBoard在每次启动用户应用程序之前都会进行额外的安全检查（它调用libmis）。不幸的是，无法安装通过图标缓存重新加载而保留的新“系统”应用程序。因此，当iOS重新加载图标缓存时，所有安装了TrollStore的应用程序，包括TrollStore本身，都将恢复到“用户”状态，不再启动。
 
-The only way to work around this is to install a persistence helper into a system app, this helper can then be used to reregister TrollStore and its installed apps as "System" so that they become launchable again, an option for this is available in TrollStore settings.
+解决这一问题的唯一方法是在系统应用程序中安装一个持久性帮助程序，然后可以使用该帮助程序将TrollStore及其安装的应用程序重新注册为“系统”，以便它们能够再次启动，TrollStore设置中提供了一个选项。
 
-On jailbroken iOS 14 when TrollHelper is used for installation, it is located in /Applications and will persist as a "System" app through icon cache reloads, therefore TrollHelper is used as the persistence helper on iOS 14.
+在越狱的iOS 14上，当使用TrollHelper进行安装时，它位于/Applications中，并将通过图标缓存重新加载作为“系统”应用程序进行持久化，因此TrollHelpers被用作iOS 14上的持久化助手。
 
 ## URL Scheme
 
-As of version 1.3, TrollStore replaces the system URL scheme "apple-magnifier" (this is done so "jailbreak" detections can't detect TrollStore like they could if TrollStore had a unique URL scheme). This URL scheme can be used to install applications right from the browser, the format goes as follows:
+从1.3版本开始，TrollStore取代了系统URL方案“apple amplifier”（这样做是为了让“越狱”检测无法像TrollStore有唯一URL方案那样检测到TrollStore）。此URL方案可用于直接从浏览器安装应用程序，格式如下：
 
 `apple-magnifier://install?url=<URL_to_IPA>`
 
-On devices that don't have TrollStore (1.3+) installed, this will just open the magnifier app.
+在没有安装TrollStore（1.3+）的设备上，这只会打开放大镜应用程序。
 
 ## Features
 
-The binaries inside an IPA can have arbitrary entitlements, fakesign them with ldid and the entitlements you want (`ldid -S<path/to/entitlements.plist> <path/to/binary>`) and TrollStore will preserve the entitlements when resigning them with the fake root certificate on installation. This gives you a lot of possibilities, some of which are explained below.
+IPA中的二进制文件可以具有任意权限，使用ldid和您想要的权限对其进行伪造签名 (`ldid -S<path/to/entitlements.plist> <path/to/binary>`) TrollStore将在安装时使用伪造的根证书退出时保留这些权利。这给了你很多可能性，下面将对其中一些可能性进行解释。
 
 ### Banned entitlements
 
-iOS 15 on A12+ has banned the following three entitlements related to running unsigned code, these are impossible to get without a PPL bypass, apps signed with them will crash on launch.
+A12+上的iOS 15已经禁止了以下三项与运行未签名代码有关的权利，如果没有PPL绕过，这些权利是不可能获得的，使用它们签名的应用程序将在发布时崩溃。
 
 `com.apple.private.cs.debugger`
 
@@ -62,7 +62,7 @@ iOS 15 on A12+ has banned the following three entitlements related to running un
 
 ### Unsandboxing
 
-Your app can run unsandboxed using one of the following entitlements:
+您的应用程序可以使用以下权利之一在不受限制的情况下运行：
 
 ```xml
 <key>com.apple.private.security.container-required</key>
@@ -88,7 +88,7 @@ You might also need the platform-application entitlement in order for these to w
 <true/>
 ```
 
-Please note that the platform-application entitlement causes side effects such as some parts of the sandbox becoming tighter, so you may need additional private entitlements to circumvent that. (For example afterwards you need an exception entitlement for every single IOKit user client class you want to access).
+请注意，平台应用程序权限会导致副作用，例如沙盒的某些部分变得更紧，因此您可能需要额外的私人权限来规避这一点。（例如，之后您需要为要访问的每个IOKit用户客户端类提供一个异常权限）。
 
 In order for an app with `com.apple.private.security.no-sandbox` and `platform-application` to be able to access it's own data container, you might need the additional entitlement:
 
