@@ -8,7 +8,7 @@ TrollStore 是一个永久签名的监禁应用程序，可以永久安装您在
 
 ### 安装指南
 
-| 版本/设备 |臂64 （A8 - A11） |arm64e （A12 - A15， M1） |
+| 版本/设备 |arm64处理器 （A8 - A11） |arm64e处理器 （A12 - A15， M1） |
 | --- | --- | --- |
 | 13.7 及以下 | 不支持（CT 错误仅在 14.0 中引入） | 不支持（CT 错误仅在 14.0 中引入） |
 | 14.0 - 14.8.1 | [checkra1n + TrollHelper](./install_trollhelper.md) | [TrollHelperOTA (arm64e)](./install_trollhelperota_arm64e.md) |
@@ -79,9 +79,9 @@ A12+上的iOS 15已经禁止了以下三项与运行未签名代码有关的权�
 <true/>
 ```
 
-The third one is recommended if you still want a sandbox container for your application.
+如果您仍然需要应用程序的沙盒容器，则建议使用第三种方法。
 
-You might also need the platform-application entitlement in order for these to work properly:
+您可能还需要平台应用程序权限才能正常工作：
 
 ```xml
 <key>platform-application</key>
@@ -90,7 +90,7 @@ You might also need the platform-application entitlement in order for these to w
 
 请注意，平台应用程序权限会导致副作用，例如沙盒的某些部分变得更紧，因此您可能需要额外的私人权限来规避这一点。（例如，之后您需要为要访问的每个IOKit用户客户端类提供一个异常权限）。
 
-In order for an app with `com.apple.private.security.no-sandbox` and `platform-application` to be able to access it's own data container, you might need the additional entitlement:
+为了使用 `com.apple.private.security.no-sandbox` and `platform-application` t为了能够访问它自己的数据容器，您可能需要额外的权限：
 
 ```xml
 <key>com.apple.private.security.storage.AppDataContainers</key>
@@ -99,22 +99,22 @@ In order for an app with `com.apple.private.security.no-sandbox` and `platform-a
 
 ### Root Helpers
 
-When your app is not sandboxed, you can spawn other binaries using posix_spawn, you can also spawn binaries as root with the following entitlement:
+当你的应用程序没有沙盒时，你可以使用posix_spown生成其他二进制文件，你也可以使用以下权限以root身份生成二进制文件：entitlement:
 
 ```xml
 <key>com.apple.private.persona-mgmt</key>
 <true/>
 ```
 
-You can also add your own binaries into your app bundle.
+您还可以将自己的二进制文件添加到应用程序捆绑包中。
 
-Afterwards you can use the [spawnRoot function in TSUtil.m](./Shared/TSUtil.m#L74) to spawn the binary as root.
+之后，您可以使用 [TSUtil.m中的spawnRoot函数](./Shared/TSUtil.m#L74) 生成二进制文件作为根。
 
-### Things that are not possible using TrollStore
+### 使用TrollStore无法实现的事情
 
-- Getting proper platformization (`TF_PLATFORM` / `CS_PLATFORMIZED`)
-- Spawning a launch daemon (Would need `CS_PLATFORMIZED`)
-- Injecting a tweak into a system process (Would need `TF_PLATFORM`, a userland PAC bypass and a PMAP trust level bypass)
+- 获得适当的平台化 (`TF_PLATFORM` / `CS_PLATFORMIZED`)
+- 生成启动后台程序 (Would need `CS_PLATFORMIZED`)
+- 将代码注入系统进程 (Would need `TF_PLATFORM`, a userland PAC bypass and a PMAP trust level bypass)
 
 ## Credits and Further Reading
 
